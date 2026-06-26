@@ -6,12 +6,10 @@ Tasks:
   - [ ] Set up basic FastAPI server that runs
   - [ ] Define the QuantumProvider abstract base class
   - [ ] Implement the LocalClassical provider (using Python's random)
-  - [ ] Write the enemy generator (returns attribute dict)
-  - [ ] Write the item generator
-  - [ ] Write the layout generator
-  - [ ] Add the three REST endpoints (/quantum/enemy, /quantum/item, /quantum/layout)
-  - [ ] Define the API contract doc (the agreed JSON shapes)
-  - [ ] Build the Godot HTTP bridge (RanQ.gd that calls the endpoints)
+  - [ ] Implement bit generation in the classical provider
+  - [ ] Add the /quantum/bits endpoint (returns grouped raw bits)
+  - [X] Define the API contract doc (the agreed JSON shapes)
+  - [ ] Build the Godot HTTP bridge (RanQ.gd that calls the endpoint)
   - [ ] Build a basic demo scene (renders something from the returned data)
   - [ ] Set up CI (ruff + pytest on PRs) once there's code to test
 
@@ -20,9 +18,9 @@ Goal: generation runs on real quantum circuits locally via Qiskit Aer.
 Tasks:
   - [ ] Add Qiskit and Qiskit Aer as dependencies
   - [ ] Implement the QiskitSimulator provider (same interface, Aer backend)
-  - [ ] Write the first real circuit: qubit-per-attribute enemy generation
-  - [ ] Map circuit measurement results back to the attribute dict format
-  - [ ] Wire the simulator provider into the existing endpoints (backend selectable via config)
+  - [ ] Write the bit-generation circuit (Hadamard + measure)
+  - [ ] Map measurement results to the grouped bit-string format
+  - [ ] Wire the simulator provider into the /quantum/bits endpoint
   - [ ] Verify simulator output matches the API contract (same JSON shape as classical)
   - [ ] Add tests for the circuit and the provider
 
@@ -33,7 +31,7 @@ Tasks:
   - [ ] Implement the IBMQuantum provider (authenticate, select backend)
   - [ ] Add circuit transpilation for the target hardware
   - [ ] Handle job submission and polling (account for long free-tier queues)
-  - [ ] Run a small enemy generation on real hardware end to end
+  - [ ] Run a small bit generation on real hardware
   - [ ] Keep the API token out of the repo (.env, gitignored)
 
 ## Phase 4: Research Layer
@@ -61,6 +59,6 @@ Tasks:
 Goal: deeper quantum use and richer generation beyond the core.
 Tasks:
   - [ ] Entanglement for correlated attributes (related qubits influence each other)
-  - [ ] Item and layout quantum circuits (extend beyond enemy generation)
+  - [ ] Richer/correlated bit generation
   - [ ] D-Wave / QUBO for map layout (constraint-based dungeon generation)
   - [ ] Larger entangled circuits encoding more of the floor state
