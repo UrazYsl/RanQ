@@ -11,35 +11,35 @@ POST /quantum/bits
 ## Request
 
 ```json
-{ "groups": [3, 2, 3] }
-```
+{ "groups": { "attr1": 3, "attr2": 2, "attr3": 3 } }```
 
-`groups` is a list of group sizes. Each number is how many bits that group needs. The example above asks for three groups of 3, 2, and 3 bits (8 bits total).
+`groups` is a list of group sizes. Each key is a name of an attribute you choose, and its value is how many bits that group needs.
+The names are just labels for you to to identify each group, which the service won't know.
+The example above asks for three groups: attr1 (3 bits), attr2 (2 bits), and attr3 (3 bits), for 8 bits total.
 
 ## Response
 
 ```json
-{ "bits": ["011", "01", "001"], "backend": "simulator" }
+{ "bits": { "attr1": "011", "attr2": "01", "attr3": "001" }, "backend": "simulator" }
 ```
 
-`bits` is a list of bit strings, one per requested group, in the same order as the request. Each is a string of "0" and "1" characters of the requested length.
-
+`bits` returns one bit string per requested group, under the same name. Each is a string of "0" and "1" of the requested length.
 `backend` names the provider that produced the bits (`classical`, `simulator`, or `ibm`). Used for logging and the research comparison.
 
 ## Rules
 
-- The total bits requested (the sum of `groups`) is capped at 1000. The cap is set in server config and can be changed.
-- The backend is chosen server-side via config. The caller never specifies it.
+- Total bits requested (sum of `groups` values) is capped at 1000. Set in server config, changeable.
+- Backend is chosen server-side via config. The caller never specifies it.
 - Bits are always returned as strings of "0" and "1".
-- Groups are returned in the same order they were requested.
-- The caller interprets the bits. The service has no knowledge of attributes, enemies, items, or anything game-specific.
+- Each requested group name appears in the response under the same name. Groups are independent, so a problem with one does not shift or affect the others.
+- The caller interprets the bits. The service knows nothing game-specific.
 
 ## Usage example
 
 To generate an enemy with three single-bit attributes (wings, armored, ranged) and one two-bit attribute (size), the game sends:
 
 ```json
-{ "groups": [1, 1, 1, 2] }
+{ "groups": { "wings": 1, "armored": 1, "ranged": 1, "size": 2 } }
 ```
 
 and reads the response chunks in order: chunk 0 is wings, chunk 1 is armored, chunk 2 is ranged, chunk 3 is size (read as a 2-bit value). The mapping from bits to meaning lives entirely in the game.
