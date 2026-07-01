@@ -4,13 +4,14 @@
 Goal: the full system works end to end with no quantum at all.
 Tasks:
   - [X] Set up basic FastAPI server that runs
-  - [ ] Define the QuantumProvider abstract base class
-  - [ ] Implement the LocalClassical provider (using Python's random)
-  - [ ] Implement bit generation in the classical provider
-  - [ ] Add the /quantum/bits endpoint (returns grouped raw bits)
+  - [X] Define the QuantumProvider abstract base class
+  - [X] Implement the LocalClassical provider (using Python's random)
+  - [X] Implement bit generation in the classical provider
+  - [X] Add the /quantum/bits endpoint (returns grouped raw bits)
   - [X] Define the API contract doc (the agreed JSON shapes)
   - [ ] Build the Godot HTTP bridge (RanQ.gd that calls the endpoint)
   - [ ] Build a basic demo scene (renders something from the returned data)
+  - [ ] Add request validation to /quantum/bits
   - [ ] Set up CI (ruff + pytest on PRs) once there's code to test
 
 ## Phase 2: Quantum Simulator
