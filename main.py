@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from random import randint
+
+from quantumproviders import ClassicalProvider
+
+classic = ClassicalProvider()
 app = FastAPI()
 
 #No entanglement and other fancy stuff yet
@@ -15,15 +19,4 @@ def read_root():
 #Basic endpoint to request fake classical generation
 @app.post("/quantum/bits")
 async def generate(qinput: QInput):
-    return {"bits": classical_generation(qinput), "backend": "classical"}
-
-def classical_generation(qinput: QInput):
-    ret = ""
-    ret_dict = {}
-
-    for attribute in qinput.groups:
-        for _ in range(qinput.groups[attribute]):
-            ret += str(randint(0, 1))
-        ret_dict[attribute] = ret
-        ret = ""
-    return ret_dict
+    return {"bits": classic.generate_qubits(qinput.groups), "backend": classic.name}
