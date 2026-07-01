@@ -3,7 +3,7 @@
 ## Phase 1: Classical Pipeline
 Goal: the full system works end to end with no quantum at all.
 Tasks:
-  - [ ] Set up basic FastAPI server that runs
+  - [X] Set up basic FastAPI server that runs
   - [ ] Define the QuantumProvider abstract base class
   - [ ] Implement the LocalClassical provider (using Python's random)
   - [ ] Implement bit generation in the classical provider

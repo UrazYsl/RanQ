@@ -1,0 +1,10 @@
+[project]
+name = "ranq"
+version = "0.1.0"
+description = "Quantum random bits service for RanQ"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+]
