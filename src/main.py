@@ -30,7 +30,8 @@ class QInput(BaseModel):
 def read_root():
     return {"status": "ok"}
 
-#Basic endpoint to request fake classical generation
+
+# Basic endpoint to request fake classical generation
 @app.post("/quantum/bits")
 async def generate(qinput: QInput):
     return {"bits": classic.generate_qubits(qinput.groups), "backend": classic.name}
