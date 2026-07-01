@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, AfterValidator, ValidationError
+from pydantic import BaseModel, AfterValidator
 from typing import Annotated
-from random import randint
 
 from config import MAX_BITS
 from quantumproviders import ClassicalProvider
