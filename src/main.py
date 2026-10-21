@@ -2,11 +2,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel, AfterValidator
 from typing import Annotated
 
-from config import MAX_BITS
-from quantumproviders import ClassicalProvider
+from config import MAX_BITS, BACKEND
+from quantumproviders import ClassicalProvider, SimulatorProvider
 
-classic = ClassicalProvider()
 app = FastAPI()
+providers = {
+    "classical": ClassicalProvider(),
+    "simulator": SimulatorProvider(),
+}
+active_provider = providers[BACKEND]
 
 
 def int_validation(value: int) -> int:
@@ -37,7 +41,10 @@ def read_root():
     return {"status": "ok"}
 
 
-# Basic endpoint to request fake classical generation
+# Request bit generation
 @app.post("/quantum/bits")
 async def generate(qinput: QInput):
-    return {"bits": classic.generate_qubits(qinput.groups), "backend": classic.name}
+    return {
+        "bits": active_provider.generate_qubits(qinput.groups),
+        "backend": active_provider.name,
+    }
