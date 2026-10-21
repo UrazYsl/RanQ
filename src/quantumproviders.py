@@ -19,7 +19,7 @@ class ClassicalProvider(QuantumProvider):
         bits = {}
         bitstr = ""
         for attribute in groups:
-            for i in range(groups.get(attribute)):
+            for _ in range(groups.get(attribute)):
                 bitstr += str(randint(0, 1))
             bits[attribute] = bitstr
             bitstr = ""
