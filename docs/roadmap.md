@@ -9,21 +9,21 @@ Tasks:
   - [X] Implement bit generation in the classical provider
   - [X] Add the /quantum/bits endpoint (returns grouped raw bits)
   - [X] Define the API contract doc (the agreed JSON shapes)
-  - [ ] Build the Godot HTTP bridge (RanQ.gd that calls the endpoint)
-  - [ ] Build a basic demo scene (renders something from the returned data)
-  - [ ] Add request validation to /quantum/bits
-  - [ ] Set up CI (ruff + pytest on PRs) once there's code to test
+  - [X] Build the Godot HTTP bridge (RanQ.gd that calls the endpoint)
+  - [X] Build a basic demo scene (renders something from the returned data)
+  - [X] Add request validation to /quantum/bits
+  - [X] Set up CI (ruff + pytest on PRs) once there's code to test
 
 ## Phase 2: Quantum Simulator
 Goal: generation runs on real quantum circuits locally via Qiskit Aer.
 Tasks:
-  - [ ] Add Qiskit and Qiskit Aer as dependencies
-  - [ ] Implement the QiskitSimulator provider (same interface, Aer backend)
-  - [ ] Write the bit-generation circuit (Hadamard + measure)
-  - [ ] Map measurement results to the grouped bit-string format
-  - [ ] Wire the simulator provider into the /quantum/bits endpoint
-  - [ ] Verify simulator output matches the API contract (same JSON shape as classical)
-  - [ ] Add tests for the circuit and the provider
+  - [X] Add Qiskit and Qiskit Aer as dependencies
+  - [X] Implement the QiskitSimulator provider (same interface, Aer backend)
+  - [X] Write the bit-generation circuit (Hadamard + measure)
+  - [X] Map measurement results to the grouped bit-string format
+  - [X] Wire the simulator provider into the /quantum/bits endpoint
+  - [X] Verify simulator output matches the API contract (same JSON shape as classical)
+  - [X] Add tests for the circuit and the provider
 
 ## Phase 3: Real Hardware (free tier)
 Goal: the same circuits run on real IBM quantum hardware via the free tier.
