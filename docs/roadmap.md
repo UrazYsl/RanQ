@@ -28,7 +28,7 @@ Tasks:
 ## Phase 3: Real Hardware (free tier)
 Goal: the same circuits run on real IBM quantum hardware via the free tier.
 Tasks:
-  - [ ] Set up free IBM Quantum account (API token + instance CRN)
+  - [X] Set up free IBM Quantum account (API token + instance CRN)
   - [ ] Implement the IBMQuantum provider (authenticate, select backend)
   - [ ] Add circuit transpilation for the target hardware
   - [ ] Handle job submission and polling (account for long free-tier queues)
