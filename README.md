@@ -22,6 +22,10 @@ RanQ uses a swappable backend, chosen by server config:
 
 The same game code works against all three. Switching is a config change, not a rewrite.
 
+## Setup (IBM backend)
+
+The IBM Quantum backend needs credentials. Copy .env.example to .env and fill in your IBM Quantum API token and instance CRN (from quantum.cloud.ibm.com). The .env file is gitignored and never committed.
+
 ## Why raw bits
 
 RanQ returns raw bits rather than finished game content like enemies or items. This keeps it general: the service has no idea what a "wing" or an "enemy" is, so any game can use it, not just a roguelike. Your game reads the bits and decides what they represent, which keeps all the game logic in the game where it belongs.
