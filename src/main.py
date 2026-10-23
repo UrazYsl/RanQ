@@ -24,11 +24,13 @@ def str_validation(attribute: str) -> str:
         raise ValueError("Attribute name must not be empty")
     return attribute
 
+
 def dict_validation(groups: dict[str, int]) -> dict:
     totl = sum(groups.values())
     if totl > MAX_BITS:
         raise ValueError(f"Total value cannot be larger than max bits: {MAX_BITS}")
     return groups
+
 
 # No entanglement and other fancy stuff yet
 # Dict validates separately for max bit count, int checks for negative values.
