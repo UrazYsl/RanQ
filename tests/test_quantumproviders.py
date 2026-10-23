@@ -63,8 +63,7 @@ def test_generate_qubits_negative_count_currently_returns_empty(provider_class):
     """KNOWN GAP: range() with a negative stop is silently empty in
     Python, so this doesn't raise, it just returns "". Flagging in
     case ClassicalProvider itself should reject negative counts rather
-    than relying on API-layer validation (which also doesn't enforce
-    this currently, see test_main.py)."""
+    than relying on API-layer validation."""
     provider = provider_class()
     result = provider.generate_qubits({"a": -3})
     assert result["a"] == ""

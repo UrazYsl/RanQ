@@ -30,6 +30,20 @@ def test_over_cap_rejected():
     assert response.status_code == 422
 
 
+def test_total_over_cap_rejected():
+    # Each group is under the cap on its own, but the sum is not
+    half = MAX_BITS // 2 + 1
+    response = client.post("/quantum/bits", json={"groups": {"a": half, "b": half}})
+    assert response.status_code == 422
+
+
+def test_total_at_cap_accepted():
+    half = MAX_BITS // 2
+    rest = MAX_BITS - half
+    response = client.post("/quantum/bits", json={"groups": {"a": half, "b": rest}})
+    assert response.status_code == 200
+
+
 def test_negative_count_rejected():
     response = client.post("/quantum/bits", json={"groups": {"a": -3}})
     assert response.status_code == 422
