@@ -43,6 +43,11 @@ The caller never picks the backend. The active backend (classical, simulator, or
 
 Requests are also capped at a configurable limit set in server config, to prevent a single request from asking for an unreasonable amount of bits. The exact request and response shapes are defined in api_contract.md.
 
+## The Endpoint Is The Only Way In ##
+All validation (the bit cap, non-negative counts, non-empty group names) lives at the API layer. Providers trust their input and do not re-check it, so they must only be called with requests that have already passed through the endpoint's validation.
+
+This keeps the rules in one place instead of repeating them in every provider. Anything that wraps or calls providers, such as the research logging layer, has to use the same validated input rather than calling a provider with raw values.
+
 ## REST as The Bridge ##
 Godot and the quantum service talk over REST (HTTP/JSON on localhost), which is enough because generation happens at discrete moments, not every frame.
 
