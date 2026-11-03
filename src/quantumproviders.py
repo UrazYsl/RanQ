@@ -1,8 +1,9 @@
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
+from qiskit_ibm_runtime import QiskitRuntimeService
 from random import randint
 from math import ceil
-from config import CIRCUIT_WIDTH
+from config import CIRCUIT_WIDTH, IBM_CRN, IBM_TOKEN
 
 
 class QuantumProvider:
@@ -61,3 +62,17 @@ class SimulatorProvider(QuantumProvider):
             iteration += groups[key]
 
         return group_results
+
+
+class IBMProvider(QuantumProvider):
+    def __init__(self):
+        super().__init__("ibm")
+        if not IBM_TOKEN:
+            raise ValueError("IBM_TOKEN is required in the .env for IBM Provider")
+        if not IBM_CRN:
+            raise ValueError("IBM_CRN is required in the .env for IBM Provider")
+        self.service = QiskitRuntimeService(
+            channel="ibm_quantum_platform", token=IBM_TOKEN, instance=IBM_CRN
+        )
+        # least_busy() already filters for online providers that aren't simulations.
+        self.backend = self.service.least_busy(min_num_qubits=CIRCUIT_WIDTH)

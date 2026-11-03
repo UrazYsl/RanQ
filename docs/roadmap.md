@@ -29,11 +29,11 @@ Tasks:
 Goal: the same circuits run on real IBM quantum hardware via the free tier.
 Tasks:
   - [X] Set up free IBM Quantum account (API token + instance CRN)
-  - [ ] Implement the IBMQuantum provider (authenticate, select backend)
+  - [X] Implement the IBMQuantum provider (authenticate, select backend)
   - [ ] Add circuit transpilation for the target hardware
   - [ ] Handle job submission and polling (account for long free-tier queues)
   - [ ] Run a small bit generation on real hardware
-  - [ ] Keep the API token out of the repo (.env, gitignored)
+  - [X] Keep the API token out of the repo (.env, gitignored)
 
 ## Phase 4: Research Layer
 Goal: classical, simulator, and quantum outputs are logged and comparable.

@@ -47,3 +47,12 @@ def test_total_at_cap_accepted():
 def test_negative_count_rejected():
     response = client.post("/quantum/bits", json={"groups": {"a": -3}})
     assert response.status_code == 422
+
+
+def test_providers_are_not_created_until_selected():
+    """Only the BACKEND provider is created, so non-IBM backends never
+    need IBM credentials (see architecture.md)."""
+    import main
+
+    assert all(isinstance(cls, type) for cls in main.providers.values())
+    assert not isinstance(main.active_provider, main.IBMProvider)
