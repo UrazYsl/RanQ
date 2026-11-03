@@ -43,6 +43,11 @@ The caller never picks the backend. The active backend (classical, simulator, or
 
 Requests are also capped at a configurable limit set in server config, to prevent a single request from asking for an unreasonable amount of bits. The exact request and response shapes are defined in api_contract.md.
 
+## Only The Active Backend Is Created ##
+The server only creates the provider that server config selects. The other providers are never created, so their requirements never apply.
+
+This means IBM credentials are only needed when the IBM backend is selected. Anyone using the classical or simulator backend, for development, testing, or just trying RanQ out, does not need an IBM account or a filled in .env. It also keeps CI free of secrets.
+
 ## The Endpoint Is The Only Way In ##
 All validation (the bit cap, non-negative counts, non-empty group names) lives at the API layer. Providers trust their input and do not re-check it, so they must only be called with requests that have already passed through the endpoint's validation.
 

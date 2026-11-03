@@ -24,7 +24,7 @@ The same game code works against all three. Switching is a config change, not a 
 
 ## Setup (IBM backend)
 
-The IBM Quantum backend needs credentials. Copy .env.example to .env and fill in your IBM Quantum API token and instance CRN (from quantum.cloud.ibm.com). The .env file is gitignored and never committed.
+The IBM Quantum backend needs credentials. Copy .env.example to .env and fill in your IBM Quantum API token and instance CRN (from quantum.cloud.ibm.com). The .env file is gitignored and never committed. The classical and simulator backends need no account or .env.
 
 ## Why raw bits
 

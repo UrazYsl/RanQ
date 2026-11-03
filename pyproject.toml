@@ -9,6 +9,7 @@ dependencies = [
     "pydantic",
     "qiskit>=2.6.0",
     "qiskit-aer>=0.18.0",
+    "qiskit-ibm-runtime>=0.51.0",
 ]
 
 [project.optional-dependencies]

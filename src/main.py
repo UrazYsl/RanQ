@@ -3,14 +3,16 @@ from pydantic import BaseModel, AfterValidator
 from typing import Annotated
 
 from config import MAX_BITS, BACKEND
-from quantumproviders import ClassicalProvider, SimulatorProvider
+from quantumproviders import ClassicalProvider, SimulatorProvider, IBMProvider
 
 app = FastAPI()
+# Using classes instead of objects, as I don't want creating and entering IBM account details required if you don't intend on using the hardware.
 providers = {
-    "classical": ClassicalProvider(),
-    "simulator": SimulatorProvider(),
+    "classical": ClassicalProvider,
+    "simulator": SimulatorProvider,
+    "ibm": IBMProvider,
 }
-active_provider = providers[BACKEND]
+active_provider = providers[BACKEND]()
 
 
 def int_validation(value: int) -> int:
