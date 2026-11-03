@@ -1,0 +1,38 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: backend
+    attributes:
+      label: Backend
+      options:
+        - Classical
+        - Simulator (Qiskit Aer)
+        - IBM Quantum
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the request you sent and the response you got.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: OS, Python version, Godot version
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      render: shell
