@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import pytest
 import quantumproviders
 from config import CIRCUIT_WIDTH
+from qiskit_ibm_runtime.fake_provider import FakeSherbrooke
 from quantumproviders import ClassicalProvider, SimulatorProvider, IBMProvider
 
 # Negative counts are rejected at the API layer (see int_validation in
@@ -91,6 +92,9 @@ def test_simulator_handles_more_bits_than_circuit_width():
 
 # IBM tests never contact IBM: QiskitRuntimeService is replaced with a fake,
 # and the credentials are patched on the module, so no .env is needed.
+FAKE_BACKEND = FakeSherbrooke()
+
+
 class FakeService:
     def __init__(self, **kwargs):
         self.kwargs = kwargs
@@ -98,7 +102,7 @@ class FakeService:
 
     def least_busy(self, **kwargs):
         self.least_busy_kwargs = kwargs
-        return "fake_backend"
+        return FAKE_BACKEND
 
 
 @pytest.fixture
@@ -125,7 +129,7 @@ def test_ibm_logs_in_with_credentials(ibm_env):
 def test_ibm_selects_least_busy_backend_wide_enough(ibm_env):
     provider = IBMProvider()
     assert provider.service.least_busy_kwargs == {"min_num_qubits": CIRCUIT_WIDTH}
-    assert provider.backend == "fake_backend"
+    assert provider.backend is FAKE_BACKEND
 
 
 @pytest.mark.parametrize("variable", ["IBM_TOKEN", "IBM_CRN"])
@@ -147,3 +151,31 @@ def test_ibm_does_not_log_in_without_credentials(ibm_env):
     ibm_env.setattr(quantumproviders, "IBM_TOKEN", "")
     with pytest.raises(ValueError):
         IBMProvider()
+
+
+def test_ibm_transpiles_for_backend_before_submitting(ibm_env):
+    """The submitted circuit must use only gates the backend supports."""
+    submitted = []
+
+    class FakeBits:
+        def get_bitstrings(self):
+            return ["0" * CIRCUIT_WIDTH]
+
+    class FakeJob:
+        def result(self):
+            data = type("D", (), {"meas": FakeBits()})()
+            return [type("R", (), {"data": data})()]
+
+    class FakeSampler:
+        def __init__(self, mode):
+            pass
+
+        def run(self, circuits, shots):
+            submitted.extend(circuits)
+            return FakeJob()
+
+    ibm_env.setattr(quantumproviders, "SamplerV2", FakeSampler)
+    IBMProvider().generate_qubits({"a": 4})
+    gates = set(submitted[0].count_ops()) - {"measure", "barrier"}
+    assert gates <= set(FAKE_BACKEND.operation_names)
+    assert "h" not in gates

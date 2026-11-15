@@ -30,7 +30,7 @@ Goal: the same circuits run on real IBM quantum hardware via the free tier.
 Tasks:
   - [X] Set up free IBM Quantum account (API token + instance CRN)
   - [X] Implement the IBMQuantum provider (authenticate, select backend)
-  - [ ] Add circuit transpilation for the target hardware
+  - [X] Add circuit transpilation for the target hardware
   - [ ] Handle job submission and polling (account for long free-tier queues)
   - [ ] Run a small bit generation on real hardware
   - [X] Keep the API token out of the repo (.env, gitignored)
