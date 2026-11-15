@@ -88,7 +88,9 @@ class IBMProvider(QuantumProvider):
         )
         # least_busy() already filters for online providers that aren't simulations.
         self.backend = self.service.least_busy(min_num_qubits=CIRCUIT_WIDTH)
-        self.pass_manager = generate_preset_pass_manager(backend=self.backend, optimization_level=1)
+        self.pass_manager = generate_preset_pass_manager(
+            backend=self.backend, optimization_level=1
+        )
 
     def generate_qubits(self, groups: dict[str, int]) -> dict[str, str]:
         total_random = sum(groups.values())
